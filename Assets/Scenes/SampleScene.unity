@@ -158,6 +158,8 @@ MonoBehaviour:
   capaSuelo:
     serializedVersion: 2
     m_Bits: 0
+  spriteIdle: {fileID: 0}
+  spriteJump: {fileID: 0}
 --- !u!61 &194739537
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -230,7 +232,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &194739539
 SpriteRenderer:
   serializedVersion: 3
