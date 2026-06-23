@@ -1,7 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// </summary>
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movimiento")]
@@ -21,15 +19,9 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("Capa (Layer) asignada a las plataformas/suelo")]
     public LayerMask capaSuelo;
 
-    [Header("Sprites (opcional)")]
-    [Tooltip("Sprite cuando está parado/caminando en el suelo")]
-    public Sprite spriteIdle;
-
-    [Tooltip("Sprite cuando está en el aire (saltando)")]
-    public Sprite spriteJump;
-
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
+    private Animator animator;
     private bool enSuelo;
     private float entradaHorizontal;
 
@@ -37,10 +29,12 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
+        // Lectura de input (Flechas o A/D para mover, Espacio para saltar)
         entradaHorizontal = Input.GetAxisRaw("Horizontal");
 
         // Verifica si el personaje está tocando el suelo
@@ -58,11 +52,9 @@ public class PlayerMovement : MonoBehaviour
         else if (entradaHorizontal < 0f)
             spriteRenderer.flipX = true;
 
-        // Cambia el sprite según si está en el suelo o en el aire
-        if (spriteIdle != null && spriteJump != null)
-        {
-            spriteRenderer.sprite = enSuelo ? spriteIdle : spriteJump;
-        }
+        // Parámetros que controlan las transiciones en el Animator Controller
+        animator.SetFloat("Velocidad", Mathf.Abs(entradaHorizontal));
+        animator.SetBool("EnElAire", !enSuelo);
     }
 
     void FixedUpdate()
